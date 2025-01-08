@@ -29,6 +29,15 @@ export const todoReducer = (
         todos: state.todos.filter((todo) => todo.id !== action.payload.id),
       };
 
+    case "UPDATE_TODO":
+      return {
+        todos: state.todos.map((todo) =>
+          todo.id === action.payload.id
+            ? { ...todo, text: action.payload.text }
+            : todo
+        ),
+      };
+
     default:
       return state;
   }

@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { useTodoContext } from "./context/TodoContext";
 
 export const TodoInput: React.FC = () => {
-  const [text, setText] = useState("");
-  const { dispatch } = useTodoContext();
+  const { addTodo } = useTodoContext();
 
   const handleAddTodo = () => {
-    if (text.trim()) {
-      dispatch({ type: "ADD_TODO", payload: { text } });
-      setText("");
-    }
+    // if (text.trim()) {
+    //   addTodo;
+    //   setText("");
+    // }
+    addTodo(text);
+    console.log("test");
   };
 
   return (

@@ -1,15 +1,19 @@
 import React from "react";
 import { useTodoContext } from "./context/TodoContext";
 
-export const TodoList: React.FC = () => {
-  const { state, dispatch } = useTodoContext();
+export const TodoList: React.FC = ({ text }) => {
+  const { state, deleteTodo, updateTodo } = useTodoContext();
 
   const handleToggleTodo = (id: number) => {
     dispatch({ type: "TOGGLE_TODO", payload: { id } });
   };
 
   const handleRemoveTodo = (id: number) => {
-    dispatch({ type: "REMOVE_TODO", payload: { id } });
+    deleteTodo(id);
+  };
+
+  const handleEditTodo = (id: number, text: string) => {
+    updateTodo(id, text);
   };
 
   return (
@@ -21,6 +25,7 @@ export const TodoList: React.FC = () => {
         >
           <span onClick={() => handleToggleTodo(todo.id)}>{todo.text}</span>
           <button onClick={() => handleRemoveTodo(todo.id)}>Delete</button>
+          <button onClick={() => handleEditTodo(todo.id, text)}>Edit</button>
         </li>
       ))}
     </ul>

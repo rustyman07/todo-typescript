@@ -10,18 +10,38 @@ const initialState: TodoState = {
 // Create the TodoContext using createContext
 const TodoContext = createContext<{
   state: TodoState;
-  dispatch: React.Dispatch<TodoAction>;
+  //   dispatch: React.Dispatch<TodoAction>;
+  // }>({
+  //   state: initialState,
+  //   dispatch: () => {},
+  addTodo: (text: string) => void;
+  deleteTodo: (id: number) => void;
+  updateTodo: (id: number, text: string) => void;
 }>({
   state: initialState,
-  dispatch: () => {},
+  addTodo: () => {},
+  deleteTodo: () => {},
+  updateTodo: () => {},
 });
 
 // TodoProvider to wrap the app and provide context values
 export const TodoProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(todoReducer, initialState);
 
+  const addTodo = (text: string) => {
+    dispatch({ type: "ADD_TODO", payload: { text } });
+    console.log("test");
+  };
+
+  const deleteTodo = (id: number) => {
+    dispatch({ type: "REMOVE_TODO", payload: { id } });
+  };
+
+  const updateTodo = (id: number, text: string) => {
+    dispatch({ type: "UPDATE_TODO", payload: { id, text } });
+  };
   return (
-    <TodoContext.Provider value={{ state, dispatch }}>
+    <TodoContext.Provider value={{ state, addTodo, deleteTodo, updateTodo }}>
       {children}
     </TodoContext.Provider>
   );
