@@ -4,8 +4,12 @@ import { useTodoContext } from "./context/TodoContext";
 type todoProps = {
   text : string
   setText: (text:string) => void;
+  id: number | null,
+  setID : (id:number) => void;
+  setIsEdit: (isEdit : boolean) => void;
+  isEdit: boolean;
 }
-export const TodoList: React.FC<todoProps> = ({ text ,setText}) => {
+export const TodoList: React.FC<todoProps> = ({ text ,setText,id,setID,setIsEdit,isEdit}) => {
   const { state, deleteTodo, updateTodo } = useTodoContext();
 
   const handleToggleTodo = (id: number) => {
@@ -18,13 +22,13 @@ export const TodoList: React.FC<todoProps> = ({ text ,setText}) => {
 
   const handleEditTodo = (id: number, text: string,tx:string) => {
     setText(tx)
-    
+    setID(id);
+    setIsEdit(true)
+
   };
 
-  const handleUpdate = (id:number ,text: string)=>{
-    updateTodo(id, text);
-  
-  }
+
+
 
   return (
     <ul>
@@ -41,3 +45,4 @@ export const TodoList: React.FC<todoProps> = ({ text ,setText}) => {
     </ul>
   );
 };
+
