@@ -15,13 +15,9 @@ const initialState: TodoState = {
 //   setIsEdit: (isEdit: boolean) => void;
 // };
 
-// Create the TodoContext using createContext
-const TodoContext = createContext<{
+type TodoContextState = {
   state: TodoState;
-  //   dispatch: React.Dispatch<TodoAction>;
-  // }>({
-  //   state: initialState,
-  //   dispatch: () => {},
+
   addTodo: (text: string) => void;
   deleteTodo: (id: number | null) => void;
   updateTodo: (id: number | null, text: string) => void;
@@ -31,7 +27,9 @@ const TodoContext = createContext<{
   isEdit: boolean;
   setIsEdit: (isEdit: boolean) => void;
   setID: (id: number | null) => void;
-}>({
+};
+
+const todoContextState: TodoContextState = {
   state: initialState,
   addTodo: () => {},
   deleteTodo: () => {},
@@ -42,7 +40,10 @@ const TodoContext = createContext<{
   isEdit: false,
   setIsEdit: () => {},
   setID: () => {},
-});
+};
+
+// Create the TodoContext using createContext
+const TodoContext = createContext<TodoContextState>(todoContextState);
 
 // TodoProvider to wrap the app and provide context values
 export const TodoProvider: React.FC = ({ children }) => {

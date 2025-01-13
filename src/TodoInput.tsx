@@ -32,20 +32,29 @@ export const TodoInput: React.FC = () => {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={text}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setText(event.target.value)
-        }
-        placeholder="Enter a new todo"
-      />
-      <button
-        onClick={() => (isEdit ? handleUpdate(id, text) : handleAddTodo())}
-      >
-        {isEdit ? "Update Todo" : "Add Todo"}
-      </button>
+    <div className="w-full max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
+      <h2 className="text-2xl font-semibold text-gray-700 text-center mb-6">
+        {isEdit ? "Edit Todo" : "Add New Todo"}
+      </h2>
+
+      <div className="flex flex-col space-y-4">
+        <input
+          type="text"
+          value={text}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setText((event.target as HTMLInputElement).value ?? "")
+          }
+          placeholder="Enter a new todo"
+          className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+        />
+
+        <button
+          onClick={() => (isEdit ? handleUpdate(id!, text) : handleAddTodo())}
+          className="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+        >
+          {isEdit ? "Update Todo" : "Add Todo"}
+        </button>
+      </div>
     </div>
   );
 };

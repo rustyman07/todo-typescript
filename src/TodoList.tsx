@@ -1,21 +1,11 @@
 import React from "react";
 import { useTodoContext } from "./context/TodoContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import FontAwesomeIcon
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons"; // Import the specific icons
 
-// type todoProps = {
-//   text : string
-//   setText: (text:string) => void;
-//   id: number | null,
-//   setID : (id:number) => void;
-//   setIsEdit: (isEdit : boolean) => void;
-//   isEdit: boolean;
-// }
 export const TodoList: React.FC = () => {
   const { state, deleteTodo, setText, setID, setIsEdit, text } =
     useTodoContext();
-
-  // const handleToggleTodo = (id: number) => {
-  //   dispatch({ type: "TOGGLE_TODO", payload: { id } });
-  // };
 
   const handleRemoveTodo = (id: number | null) => {
     deleteTodo(id);
@@ -29,18 +19,43 @@ export const TodoList: React.FC = () => {
   };
 
   return (
-    <ul>
+    <ul className="space-y-4">
       {state.todos.map((todo) => (
         <li
           key={todo.id}
-          style={{ textDecoration: todo.completed ? "line-through" : "none" }}
+          className={`flex items-center justify-between p-4 border rounded-lg ${
+            todo.completed ? "bg-green-100 line-through" : "bg-gray-50"
+          }`}
         >
-          {todo.text}
-          {/* <span onClick={() => handleToggleTodo(todo.id)}>{todo.text}</span> */}
-          <button onClick={() => handleRemoveTodo(todo.id)}>Delete</button>
-          <button onClick={() => handleEditTodo(todo.id, text, todo.text)}>
-            Edit
-          </button>
+          <span
+            className={`flex-1 cursor-pointer ${
+              todo.completed ? "text-green-500" : "text-gray-700"
+            }`}
+            onClick={() => {
+              // handle toggle todo completed state
+              // handleToggleTodo(todo.id);
+            }}
+          >
+            {todo.text}
+          </span>
+
+          <div className="space-x-4 flex items-center">
+            {/* Delete Icon */}
+            <button
+              onClick={() => handleRemoveTodo(todo.id)}
+              className="text-red-500 hover:text-red-700 focus:outline-none"
+            >
+              <FontAwesomeIcon icon={faTrash} className="h-6 w-6" />
+            </button>
+
+            {/* Edit Icon */}
+            <button
+              onClick={() => handleEditTodo(todo.id, text, todo.text)}
+              className="text-blue-500 hover:text-blue-700 focus:outline-none"
+            >
+              <FontAwesomeIcon icon={faEdit} className="h-6 w-6" />
+            </button>
+          </div>
         </li>
       ))}
     </ul>
